@@ -7,29 +7,49 @@ namespace NoteApp
     {
         private NoteItem note;
         public event EventHandler<NoteItem> DeleteNote;
+        public event EventHandler<NoteItem> EditNote;
+
+        public NoteItem Note
+        {
+            get { return note; }
+            set
+            {
+                note = value;
+                InitializeTask();
+            }
+        }
 
         public SingleNoteCard(NoteItem noteItem)
         {
             InitializeComponent();
-            note = noteItem;
-            InitializeTask();
-            NoteDeleteButton.Click += DeleteItemFromList_Click;
+            Note = noteItem;
+            NotePanel.Click += EditNote_Click;
+        }
+
+        private void EditNote_Click(object sender, EventArgs e)
+        {
+            OnEditNote();
+        }
+
+        protected virtual void OnEditNote()
+        {
+            EditNote?.Invoke(this, Note);
         }
 
         private void InitializeTask()
         {
-            NoteTitle.Text = note.Title;
-            NoteDescription.Text = note.Note;
+            NoteTitle.Text = Note.Title;
+            NoteDescription.Text = Note.Note;
         }
 
-        private void DeleteItemFromList_Click(object sender, EventArgs e)
+        private void NoteDeleteButton_Click(object sender, EventArgs e)
         {
-            OnDeleteTask(note);
+            OnDeleteNote();
         }
 
-        protected virtual void OnDeleteTask(NoteItem taskToDelete)
+        protected virtual void OnDeleteNote()
         {
-            DeleteNote?.Invoke(this, taskToDelete);
+            DeleteNote?.Invoke(this, Note);
         }
     }
 }

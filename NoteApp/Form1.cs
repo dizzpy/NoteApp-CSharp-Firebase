@@ -9,12 +9,15 @@ namespace NoteApp
     {
         private FirestoreDb db;
         private List<NoteItem> notes = new List<NoteItem>();
+        private AddNoteWindow addNoteWindow;
 
         public Form1()
         {
             InitializeComponent();
             InitializeFirestore();
             LoadNotesFromFirestore();
+            addNoteWindow = new AddNoteWindow();
+            addNoteWindow.NoteUpdated += AddNoteWindow_NoteUpdated;
         }
 
         private void InitializeFirestore()
@@ -35,14 +38,13 @@ namespace NoteApp
                 {
                     Dictionary<string, object> noteData = documentSnapshot.ToDictionary();
 
-                    // Check if "Title" and "note" keys exist in noteData dictionary
-                    if (noteData.ContainsKey("Title") && noteData.ContainsKey("note"))
+                    if (noteData.ContainsKey("Title") && noteData.ContainsKey("Note"))
                     {
                         NoteItem note = new NoteItem
                         {
                             NoteID = documentSnapshot.Id,
                             Title = noteData["Title"].ToString(),
-                            Note = noteData["note"].ToString(),
+                            Note = noteData["Note"].ToString(),
                         };
 
                         notes.Add(note);
@@ -62,14 +64,13 @@ namespace NoteApp
             }
         }
 
-
-
         private void AddNoteToListView(NoteItem note)
         {
             try
             {
                 SingleNoteCard item = new SingleNoteCard(note);
                 item.DeleteNote += Item_DeleteNote;
+                item.EditNote += Item_EditNote;
                 flowLayoutPanel1.Controls.Add(item);
             }
             catch (Exception ex)
@@ -78,17 +79,35 @@ namespace NoteApp
             }
         }
 
+        private void AddNoteWindow_NoteUpdated(object sender, NoteItem note)
+        {
+            // Find and update the note in the UI
+            foreach (Control control in flowLayoutPanel1.Controls)
+            {
+                if (control is SingleNoteCard singleNoteCard && singleNoteCard.Note.NoteID == note.NoteID)
+                {
+                    singleNoteCard.Note = note; // Update the note in the SingleNoteCard control
+                    break;
+                }
+            }
+        }
+
+        private async void Item_EditNote(object sender, NoteItem note)
+        {
+            using (var addNoteWindow = new AddNoteWindow(note))
+            {
+                addNoteWindow.ShowDialog();
+            }
+        }
+
         private async void Item_DeleteNote(object sender, NoteItem note)
         {
             try
             {
-                // Remove the note from the notes list
+                SingleNoteCard cardToRemove = (SingleNoteCard)sender;
                 notes.Remove(note);
+                flowLayoutPanel1.Controls.Remove(cardToRemove);
 
-                // Remove the corresponding SingleNoteCard control from the flowLayoutPanel
-                flowLayoutPanel1.Controls.Remove((SingleNoteCard)sender);
-
-                // Delete the note document from Firestore
                 await db.Collection("Notes").Document(note.NoteID).DeleteAsync();
 
                 MessageBox.Show("Note deleted successfully");
@@ -99,20 +118,10 @@ namespace NoteApp
             }
         }
 
-
-        private void AddNoteWindow_AddTaskClicked(object sender, NoteItem note)
-        {
-            // Add the note to the notes list
-            notes.Add(note);
-            // Display the note on the form
-            AddNoteToListView(note);
-        }
-
-        private void OpenAddNote_Click(object sender, EventArgs e)
+        private void OpenAddNoteWindow_Click(object sender, EventArgs e)
         {
             using (var addNoteWindow = new AddNoteWindow())
             {
-                addNoteWindow.AddTaskClicked += AddNoteWindow_AddTaskClicked;
                 addNoteWindow.ShowDialog();
             }
         }

@@ -8,12 +8,26 @@ namespace NoteApp
     public partial class AddNoteWindow : Form
     {
         private FirestoreDb db;
-        public event EventHandler<NoteItem> AddTaskClicked;
+        private NoteItem noteToEdit;
 
-        public AddNoteWindow()
+        // Event handler delegate for note updated event
+        public delegate void NoteUpdatedEventHandler(object sender, NoteItem note);
+
+        // Event raised when a note is updated
+        public event NoteUpdatedEventHandler NoteUpdated;
+
+        public AddNoteWindow(NoteItem note = null)
         {
             InitializeComponent();
             InitializeFirestore();
+
+            if (note != null)
+            {
+                noteToEdit = note;
+                NoteTitleText.Text = note.Title;
+                NoteText.Text = note.Note;
+                SaveNoteButton.Text = "Save Changes";
+            }
         }
 
         private void InitializeFirestore()
@@ -33,41 +47,53 @@ namespace NoteApp
 
         private async void SaveNoteButton_Click(object sender, EventArgs e)
         {
-            // Create a NoteItem object from the form's input fields
-            NoteItem note = new NoteItem
+            if (noteToEdit != null)
             {
-                NoteID = GenerateNoteID(),
-                Title = NoteTitleText.Text,
-                Note = NoteText.Text,
-            };
+                noteToEdit.Title = NoteTitleText.Text;
+                noteToEdit.Note = NoteText.Text;
 
-            // Raise the AddTaskClicked event and pass the note data
-            AddTaskClicked?.Invoke(this, note);
+                DocumentReference noteDocument = db.Collection("Notes").Document(noteToEdit.NoteID);
+                await noteDocument.SetAsync(noteToEdit, SetOptions.MergeAll);
 
-            // Create a dictionary to store the note data
-            var noteData = new Dictionary<string, object>
-            {
-                { "noteID", note.NoteID },
-                { "Title", note.Title },
-                { "note", note.Note },
-            };
-
-            try
-            {
-                string noteID = GenerateNoteID();
-
-                DocumentReference noteDocument = db.Collection("Notes").Document(note.NoteID);
-                await noteDocument.SetAsync(noteData);
-
-                MessageBox.Show("Note Added Successfully");
+                // Raise an event to notify the parent form to refresh the UI
+                OnNoteUpdated(noteToEdit);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Error adding note: " + ex.Message);
+                NoteItem note = new NoteItem
+                {
+                    NoteID = GenerateNoteID(),
+                    Title = NoteTitleText.Text,
+                    Note = NoteText.Text,
+                };
+
+                var noteData = new Dictionary<string, object>
+                {
+                    { "NoteID", note.NoteID },
+                    { "Title", note.Title },
+                    { "Note", note.Note },
+                };
+
+                try
+                {
+                    DocumentReference noteDocument = db.Collection("Notes").Document(note.NoteID);
+                    await noteDocument.SetAsync(noteData);
+
+                    MessageBox.Show("Note Added Successfully");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error adding note: " + ex.Message);
+                }
             }
 
-            // Close the form after adding the note
             this.Close();
+        }
+
+        // Method to raise the note updated event
+        protected virtual void OnNoteUpdated(NoteItem note)
+        {
+            NoteUpdated?.Invoke(this, note);
         }
     }
 }

@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.OpenAddNote = new System.Windows.Forms.Button();
+            this.OpenAddNoteWindow = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
-            // OpenAddNote
+            // OpenAddNoteWindow
             // 
-            this.OpenAddNote.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OpenAddNote.Location = new System.Drawing.Point(776, 22);
-            this.OpenAddNote.Name = "OpenAddNote";
-            this.OpenAddNote.Size = new System.Drawing.Size(139, 47);
-            this.OpenAddNote.TabIndex = 0;
-            this.OpenAddNote.Text = "Add Note";
-            this.OpenAddNote.UseVisualStyleBackColor = true;
-            this.OpenAddNote.Click += new System.EventHandler(this.OpenAddNote_Click);
+            this.OpenAddNoteWindow.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OpenAddNoteWindow.Location = new System.Drawing.Point(776, 22);
+            this.OpenAddNoteWindow.Name = "OpenAddNoteWindow";
+            this.OpenAddNoteWindow.Size = new System.Drawing.Size(139, 47);
+            this.OpenAddNoteWindow.TabIndex = 0;
+            this.OpenAddNoteWindow.Text = "Add Note";
+            this.OpenAddNoteWindow.UseVisualStyleBackColor = true;
+            this.OpenAddNoteWindow.Click += new System.EventHandler(this.OpenAddNoteWindow_Click);
             // 
             // flowLayoutPanel1
             // 
@@ -58,7 +58,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(927, 591);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.OpenAddNote);
+            this.Controls.Add(this.OpenAddNoteWindow);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -70,7 +70,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button OpenAddNote;
+        private System.Windows.Forms.Button OpenAddNoteWindow;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }
