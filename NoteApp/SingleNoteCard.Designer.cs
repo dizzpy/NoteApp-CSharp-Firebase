@@ -32,14 +32,14 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.NoteDescription = new System.Windows.Forms.Label();
             this.NoteTitle = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.NoteDeleteButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.NoteDeleteButton);
             this.panel1.Controls.Add(this.NoteDescription);
             this.panel1.Controls.Add(this.NoteTitle);
             this.panel1.Location = new System.Drawing.Point(4, 4);
@@ -67,15 +67,15 @@
     "mauris semper, sed vehicula eros convallis. Aliquam imperdiet sem felis, sed lao" +
     "reet nunc rutrum et.";
             // 
-            // button1
+            // NoteDeleteButton
             // 
-            this.button1.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(383, 14);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(40, 31);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "X";
-            this.button1.UseVisualStyleBackColor = true;
+            this.NoteDeleteButton.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NoteDeleteButton.Location = new System.Drawing.Point(383, 14);
+            this.NoteDeleteButton.Name = "NoteDeleteButton";
+            this.NoteDeleteButton.Size = new System.Drawing.Size(40, 31);
+            this.NoteDeleteButton.TabIndex = 2;
+            this.NoteDeleteButton.Text = "X";
+            this.NoteDeleteButton.UseVisualStyleBackColor = true;
             // 
             // SingleNoteCard
             // 
@@ -95,6 +95,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label NoteDescription;
         private System.Windows.Forms.Label NoteTitle;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button NoteDeleteButton;
     }
 }
