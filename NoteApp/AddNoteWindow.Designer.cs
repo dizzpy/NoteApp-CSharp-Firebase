@@ -141,6 +141,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "AddNoteWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AddNoteWindow";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
