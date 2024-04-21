@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
             this.NoteTitleText = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.NoteText = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SaveNoteButton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.AddNoteDelete = new System.Windows.Forms.Button();
@@ -51,6 +51,13 @@
             this.panel1.Size = new System.Drawing.Size(959, 112);
             this.panel1.TabIndex = 5;
             // 
+            // NoteTitleText
+            // 
+            this.NoteTitleText.Location = new System.Drawing.Point(16, 54);
+            this.NoteTitleText.Name = "NoteTitleText";
+            this.NoteTitleText.Size = new System.Drawing.Size(924, 27);
+            this.NoteTitleText.TabIndex = 6;
+            // 
             // label4
             // 
             this.label4.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -59,15 +66,6 @@
             this.label4.Size = new System.Drawing.Size(104, 23);
             this.label4.TabIndex = 0;
             this.label4.Text = "Note Title";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
-            // 
-            // NoteTitleText
-            // 
-            this.NoteTitleText.Location = new System.Drawing.Point(16, 54);
-            this.NoteTitleText.Name = "NoteTitleText";
-            this.NoteTitleText.Size = new System.Drawing.Size(924, 27);
-            this.NoteTitleText.TabIndex = 6;
-            this.NoteTitleText.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // panel2
             // 
@@ -79,6 +77,14 @@
             this.panel2.Size = new System.Drawing.Size(959, 475);
             this.panel2.TabIndex = 7;
             // 
+            // NoteText
+            // 
+            this.NoteText.Location = new System.Drawing.Point(21, 55);
+            this.NoteText.Name = "NoteText";
+            this.NoteText.Size = new System.Drawing.Size(919, 399);
+            this.NoteText.TabIndex = 1;
+            this.NoteText.Text = "";
+            // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -87,14 +93,6 @@
             this.label1.Size = new System.Drawing.Size(52, 23);
             this.label1.TabIndex = 0;
             this.label1.Text = "Note";
-            // 
-            // NoteText
-            // 
-            this.NoteText.Location = new System.Drawing.Point(21, 55);
-            this.NoteText.Name = "NoteText";
-            this.NoteText.Size = new System.Drawing.Size(919, 399);
-            this.NoteText.TabIndex = 1;
-            this.NoteText.Text = "";
             // 
             // SaveNoteButton
             // 
@@ -105,6 +103,7 @@
             this.SaveNoteButton.TabIndex = 8;
             this.SaveNoteButton.Text = "Save Note";
             this.SaveNoteButton.UseVisualStyleBackColor = true;
+            this.SaveNoteButton.Click += new System.EventHandler(this.SaveNoteButton_Click);
             // 
             // button2
             // 
